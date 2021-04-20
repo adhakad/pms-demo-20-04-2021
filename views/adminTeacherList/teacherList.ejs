@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    <link rel="stylesheet" href="styleses.css">
+</head>
+  <body>
+    
+            <div class="container">
+                <div class="row">
+                    <h1>All Teacher's List</h1>
+                    <br>
+              <div class="tblData" style="height: 200px;">
+                 <table class="table table-striped table-primary">
+                  <thead>
+                    <tr>
+                      <th>s.no</th>
+                      <th>Teacher Image</th>
+                      <th>Teacher Name</th>
+                      <th>Teacher ID</th>
+                      <th>Action</th>
+                      <th>Login Status</th>
+                      <th>Class Teacher</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <div id="abc"></div>
+                    <div id="class_teacher_status"></div>
+                    <div id="abcde"></div>
+                  </tbody>
+                </table>
+                </div>
+              </div>
+            </div>
+              
+    
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+  <script src="https://cdn.ckeditor.com/4.9.1/standard/ckeditor.js"></script>
+  <script src="main.js" defer></script>
+
+  <script>
+    $(document).ready(function(){
+     
+      
+  
+     getdata();
+  
+     function getdata(){
+        $.ajax({
+         type : "GET",
+         url : "/teacherList/get",
+         dataType:'json',
+         success:function(response){
+          if(response.msg=='success'){
+              if(response.data==undefined || response.data==null || response.data==''){
+                  $('.tblData').hide();
+              }else{
+                 $('.tblData').show();
+              $.each(response.data,function(index,data){
+                  var url = url+data._id;
+                  index+=1;
+                  var teacher_status =data.teacher_status;
+                  var class_teacher_status =data.class_teacher_status;
+                  if(teacher_status=='disabled' && class_teacher_status=='inactive'){
+                    $('tbody').append("<tr class='taskrow'><td>"+ index +"</td><td><img class='img2' src='./uploads/"+data.image+"' width='50'></td><td>"+data.teachername+"</td><td>"+data.teacher_uid+"</td><td>"+"<button class=' btn btn-danger' data-toggle='modal' data-target='#"+data.teacher_uid+"'><i class='fa fa-trash'></i></button>"+"</td><td>"+"<button class=' btn btn-danger' data-toggle='modal' data-target='#"+data._id+"'>"+data.teacher_status+"</button>"+"</td><td>"+"<button class=' btn btn-danger' data-toggle='modal' data-target='#"+data._id+data.teacher_uid+"'>"+data.class_teacher_status+"</button>"+"</td></tr>");
+                  }else if (teacher_status=='disabled' && class_teacher_status=='active'){
+                    $('tbody').append("<tr class='taskrow'><td>"+ index +"</td><td><img class='img2' src='./uploads/"+data.image+"' width='50'></td><td>"+data.teachername+"</td><td>"+data.teacher_uid+"</td><td>"+"<button class=' btn btn-danger' data-toggle='modal' data-target='#"+data.teacher_uid+"'><i class='fa fa-trash'></i></button>"+"</td><td>"+"<button class=' btn btn-danger' data-toggle='modal' data-target='#"+data._id+"'>"+data.teacher_status+"</button>"+"</td><td>"+"<button class=' btn btn-success' data-toggle='modal' data-target='#"+data._id+data.teacher_uid+"'>"+data.class_teacher_status+"</button>"+"</td></tr>");
+                  }else if (teacher_status=='enabled' && class_teacher_status=='inactive'){
+                    $('tbody').append("<tr class='taskrow'><td>"+ index +"</td><td><img class='img2' src='./uploads/"+data.image+"' width='50'></td><td>"+data.teachername+"</td><td>"+data.teacher_uid+"</td><td>"+"<button class=' btn btn-danger' data-toggle='modal' data-target='#"+data.teacher_uid+"'><i class='fa fa-trash'></i></button>"+"</td><td>"+"<button class=' btn btn-success' data-toggle='modal' data-target='#"+data._id+"'>"+data.teacher_status+"</button>"+"</td><td>"+"<button class=' btn btn-danger' data-toggle='modal' data-target='#"+data._id+data.teacher_uid+"'>"+data.class_teacher_status+"</button>"+"</td></tr>");
+                  }else{
+                    $('tbody').append("<tr class='taskrow'><td>"+ index +"</td><td><img class='img2' src='./uploads/"+data.image+"' width='50'></td><td>"+data.teachername+"</td><td>"+data.teacher_uid+"</td><td>"+"<button class=' btn btn-danger' data-toggle='modal' data-target='#"+data.teacher_uid+"'><i class='fa fa-trash'></i></button>"+"</td><td>"+"<button class=' btn btn-success' data-toggle='modal' data-target='#"+data._id+"'>"+data.teacher_status+"</button>"+"</td><td>"+"<button class=' btn btn-success' data-toggle='modal' data-target='#"+data._id+data.teacher_uid+"'>"+data.class_teacher_status+"</button>"+"</td></tr>");
+                  }
+
+                  if(teacher_status=='disabled'){
+                    $('#abc').append("<div class='modal fade' id="+data._id+" role='dialog'><div class='modal-dialog'><div class='modal-content'><div class='modal-header'><button type='button' class='close' data-dismiss='modal'>&times;</button> <h4 class='modal-title'>abc</h4></div><div class='modal-body'>abc</div><div class='modal-footer'><button class='enable_t_status btn btn-danger'  value='"+data._id+"'>"+data.teacher_status+"</button></div></div></div></div>");
+                  }else{
+                    $('#abc').append("<div class='modal fade' id="+data._id+" role='dialog'><div class='modal-dialog'><div class='modal-content'><div class='modal-header'><button type='button' class='close' data-dismiss='modal'>&times;</button> <h4 class='modal-title'>abc</h4></div><div class='modal-body'>abc</div><div class='modal-footer'><button class='disable_t_status btn btn-success'  value='"+data._id+"'>"+data.teacher_status+"</button></div></div></div></div>");
+                  }
+
+                  if(class_teacher_status=='inactive'){
+                    $('#class_teacher_status').append("<div class='modal fade' id="+data._id+data.teacher_uid+" role='dialog'><div class='modal-dialog'><div class='modal-content'><div class='modal-header'><button type='button' class='close' data-dismiss='modal'>&times;</button> <h4 class='modal-title'>abc</h4></div><div class='modal-body'>abc</div><div class='modal-footer'><button class='active_c_t_status btn btn-danger'  value='"+data._id+"'>"+data.class_teacher_status+"</button></div></div></div></div>");
+                  }else{
+                    $('#class_teacher_status').append("<div class='modal fade' id="+data._id+data.teacher_uid+" role='dialog'><div class='modal-dialog'><div class='modal-content'><div class='modal-header'><button type='button' class='close' data-dismiss='modal'>&times;</button> <h4 class='modal-title'>abc</h4></div><div class='modal-body'>abc</div><div class='modal-footer'><button class='inactive_c_t_status btn btn-success'  value='"+data._id+"'>"+data.class_teacher_status+"</button></div></div></div></div>");
+                  }
+                    
+                  $('#abcde').append("<div class='modal fade' id="+data.teacher_uid+" role='dialog'><div class='modal-dialog'><div class='modal-content'><div class='modal-header'><button type='button' class='close' data-dismiss='modal'>&times;</button> <h4 class='modal-title'>abc</h4></div><div class='modal-body'>abc</div><div class='modal-footer'><button class='del btn btn-danger'  value='"+data._id+"'>delete</button></div></div></div></div>");                     
+              });
+          }
+        }
+     },
+            error:function(response){
+                alert('server error');
+            }
+        });
+    }
+  /*----------------------------------------------------------------------------*/
+  $(document).on('click','button.del',function(){
+    var id = $(this).parent().find('button.del').val();
+    $.ajax({
+        url:'/teacherList/delete',
+        method:'delete',
+        dataType:'json',
+        data:{'id':id},
+        success:function(response){
+          if(response.msg=='success'){
+              location.reload();
+          }else{
+              alert('data not get deleted');
+          }
+      },
+        error:function(response){
+                 alert('server error')   
+        }
+    });
+  });
+  
+  /*----------------------------------------------------------------------------*/
+  $(document).on('click','button.enable_t_status',function(){
+          var id = $(this).parent().find('button.enable_t_status').val();
+          $.ajax({
+            url:'/teacherList/enable_t_status',
+              method:'put',
+              dataType:'json',
+              data:{'id':id},
+              success:function(response){
+                location.reload();
+              },
+              error:function(response){
+                       alert('server error')   
+              }
+          });
+      });
+  
+      $(document).on('click','button.disable_t_status',function(){
+          var id = $(this).parent().find('button.disable_t_status').val();
+          $.ajax({
+            url:'/teacherList/disable_t_status',
+              method:'put',
+              dataType:'json',
+              data:{'id':id},
+              success:function(response){
+                location.reload();
+              },
+              error:function(response){
+                       alert('server error')   
+              }
+          });
+      });
+     
+
+      $(document).on('click','button.active_c_t_status',function(){
+          var id = $(this).parent().find('button.active_c_t_status').val();
+          $.ajax({
+            url:'/teacherList/active_c_t_status',
+              method:'put',
+              dataType:'json',
+              data:{'id':id},
+              success:function(response){
+                location.reload();
+              },
+              error:function(response){
+                       alert('server error')   
+              }
+          });
+      });
+  
+      $(document).on('click','button.inactive_c_t_status',function(){
+          var id = $(this).parent().find('button.inactive_c_t_status').val();
+          $.ajax({
+            url:'/teacherList/inactive_c_t_status',
+              method:'put',
+              dataType:'json',
+              data:{'id':id},
+              success:function(response){
+                location.reload();
+              },
+              error:function(response){
+                       alert('server error')   
+              }
+          });
+      });
+
+  
+      
+  
+  });
+  </script>
+       </body>
+     </html>
+     

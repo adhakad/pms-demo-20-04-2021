@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    
+    <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    <link type="text/css" rel="stylesheet" href="sty.css">
+    <style>
+      .clearfix{
+         overflow: auto;
+      }
+   </style>
+</head>
+<body style="background-color: rgb(250, 248, 252);">
+  <div class="abcde clearfix"><h5 style="color:#fff;margin-left:8%;font-size: 50px;color: rgb(66, 15, 184);">TechBista</h5></div>
+
+
+  <ul style="margin-top: 40vh;">
+    <div class="menu " style="margin-left: 85%;"><i class="fa fa-times" style="font-size: 38px;color: rgb(115, 117, 146);"></i></div>
+    <li><a href="/studentUser">Add Student</a></li>
+    <li><a href="/teacher">Add Teacher</a></li>
+    <li><a href="/classTeacher">Add Class Teacher</a></li>
+    <li><a href="/totalAdminClass">Create All Class</a></li>
+  </ul>
+
+  <nav class="bnav">
+    <div class="bnav-item">
+      <a href="/studentList" class="bnav-link-active"><i class="fa fa-envelope"></i>Student</a>
+    </div>
+    <div class="bnav-item">
+      <a href="/totalAdminClassList" class="bnav-link"><i class="fa fa-link icon"></i>Classes</a>
+    </div>
+    <div class="bnav-item">
+      <a href="/teacherList" class="bnav-link"><i class="fa fa-laptop icon"></i>Teacher</a>
+    </div>
+     <div class="bnav-item">
+      <a href="#" class="bnav-link"><i class="fa fa-book icon"></i>Demo</a>
+    </div>
+    <div class="toggle">
+      <div class="kebab menu">
+        <figure></figure>
+        <figure class="middle"></figure>
+        <figure></figure>
+      </div>
+      <div class="menu">More</div>
+    </div>
+  </nav>
+
+   
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+  <script src="https://cdn.ckeditor.com/4.9.1/standard/ckeditor.js"></script>
+  <script src="main.js" defer></script>
+
+
+  <script>
+    $(document).ready(function(){
+      $('.menu').click(function(){
+        $('ul').toggleClass('active');
+      })
+    })
+  </script>
+
+  </body>
+</html>
+     
